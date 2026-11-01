@@ -1,8 +1,8 @@
 # Poe2 mod index
 
-The public index of **Path of Exile 2** mods that the [Poe2 launcher](https://github.com/WaystoneWorks/Poe2Launcher) shows under *Library > Mods > Browse*. The index is one file, [`index.json`](index.json); anyone adds a mod with a pull request. The mod files themselves are **not** stored here: the index lists where each version can be downloaded (an `https://` address, usually a GitHub release asset) and the SHA-256 of the package.
+The public index of **Path of Exile 2** mods that the [Poe2 launcher](https://github.com/WaystoneWorks/Poe2Launcher) shows under *Library > Mods > Browse*. The index is one file, [`index.json`](index.json); anyone adds a mod with a pull request. Mod files are **not** stored here: the index lists each version's `https://` download address (usually a GitHub release asset) and the package SHA-256.
 
-The launcher reads `https://raw.githubusercontent.com/WaystoneWorks/Poe2Mods/main/index.json`, checks every entry, keeps a saved copy (so Browse still works offline) and installs a version into its mod cache: it downloads the package, compares its SHA-256 and size with the index, runs the package checks (`poe_hook_mods::verify_package`: file names, paths, links, size limits, `mod.toml`) and only then keeps it. A download that fails any check installs nothing.
+The launcher reads `https://raw.githubusercontent.com/WaystoneWorks/Poe2Mods/main/index.json`, checks every entry, keeps a saved copy for offline use, and installs a version only after SHA-256 and size match the index and `poe_hook_mods::verify_package` passes. A download that fails any check installs nothing.
 
 > This is an unofficial fan project for the private server of Poe2ModdingProject. It is not connected to Grinding Gear Games. A mod with a client DLL is native code that runs inside the game on a player's computer; being listed here is not a security review. The hash proves which file it is, not that it is safe. Players decide whom to trust.
 
@@ -51,12 +51,12 @@ Each version:
 - One entry per mod id. A new version of your mod is a new item in its `versions`, not a new entry.
 - The package at `url` must be exactly the file with that `sha256`; never replace a published file, publish a new version.
 - No misleading names: do not pretend to be another author or the official game. No mods that attack players, the game's anti-cheat or other people's servers.
-- A mod that needs another mod says so in its `mod.toml` (`[dependencies]`); the launcher can only pull in dependencies that are in its cache.
+- A mod that needs another mod says so in its `mod.toml` (`[dependencies]`).
 
 ## Maintainers
 
-- Merge a pull request only when the `validate` check is green, the download works and the mod is what it says. The launcher is forgiving (it skips a broken entry or version and keeps the rest), so a mistake that slips through never breaks the index for everybody.
-- Creating this repository: copy the contents of `docs/mod-index-template/` of Poe2ModdingProject (including `.github/`) into the root of `WaystoneWorks/Poe2Mods` (`index.json` must be at the root of the `main` branch).
+- Merge a pull request only when the `validate` check is green, the download works and the mod is what it says. The launcher skips a broken entry or version and keeps the rest.
+- Setup: copy `docs/mod-index-template/` of Poe2ModdingProject (including `.github/`) into the root of `WaystoneWorks/Poe2Mods` (`index.json` at the root of `main`).
 - `updated` is a free text (a date); keep it current when you merge.
 
 ## Licence
